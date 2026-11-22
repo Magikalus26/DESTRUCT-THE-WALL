@@ -1,0 +1,26 @@
+{
+  "name": "DESTRUCT THE WALL",
+  "short_name": "DestructWall",
+  "description": "Jeu d'évasion et de destruction incrémentale à la première personne. Brisez les 5 enceintes en micro-cubes pour retrouver la liberté.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1218",
+  "theme_color": "#0e1218",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "./assets/icon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
