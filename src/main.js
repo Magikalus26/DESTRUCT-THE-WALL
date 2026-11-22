@@ -524,6 +524,20 @@ class DestructTheWallApp {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  window.__destructApp = new DestructTheWallApp();
-});
+function bootDestructTheWall() {
+  if (window.__destructApp) return;
+  try {
+    window.__destructApp = new DestructTheWallApp();
+  } catch (err) {
+    console.error('DestructTheWall boot error:', err);
+    if (typeof window.__showBootError === 'function') {
+      window.__showBootError('Erreur WebGL / Initialisation', err && (err.stack || err.message || String(err)));
+    }
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootDestructTheWall, { once: true });
+} else {
+  bootDestructTheWall();
+}

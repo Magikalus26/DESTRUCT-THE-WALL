@@ -32,10 +32,10 @@ export const RING_DEFINITIONS = [
   { ring: 5, min: 53, max: 61, mat: 5, label: 'Enceinte 5 — Blindage' }
 ];
 
-const MAX_INSTANCES_PER_MAT = 9000;
-const MAX_CRACK_INSTANCES = 600;
-const MAX_RUBBLE = 320;
-const MAX_SPARKS = 140;
+const MAX_INSTANCES_PER_MAT = 4500;
+const MAX_CRACK_INSTANCES = 500;
+const MAX_RUBBLE = 280;
+const MAX_SPARKS = 120;
 
 const _dummy = new THREE.Object3D();
 const _color = new THREE.Color();

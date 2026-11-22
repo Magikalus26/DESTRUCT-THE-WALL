@@ -23,6 +23,51 @@
   <link rel="apple-touch-icon" href="./assets/icon.jpg" />
   <link rel="manifest" href="./manifest.json" />
 
+  <!-- Fallback Import Map for raw static serving without bundler -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.170.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <!-- Global Early Crash Guard: never leave a silent black screen -->
+  <script>
+    (function () {
+      function showBootError(title, detail) {
+        var box = document.getElementById('fatal-error-overlay');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'fatal-error-overlay';
+          box.style.cssText =
+            'position:fixed;inset:0;z-index:9999;background:rgba(12,16,24,0.94);color:#f8fafc;' +
+            'display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,-apple-system,sans-serif;';
+          document.body && document.body.appendChild(box);
+        }
+        if (!box.parentNode && document.body) document.body.appendChild(box);
+        box.innerHTML =
+          '<div style="max-width:360px;width:100%;background:#1e2633;border:2px solid #ef4444;border-radius:14px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,0.7);">' +
+          '<div style="font-weight:800;font-size:16px;color:#fca5a5;margin-bottom:8px;">⚠️ ' + title + '</div>' +
+          '<pre style="white-space:pre-wrap;word-break:break-word;font-size:12px;color:#e2e8f0;background:#0f141d;padding:10px;border-radius:8px;max-height:220px;overflow:auto;">' +
+          String(detail || 'Erreur inconnue').replace(/</g, '&lt;') +
+          '</pre>' +
+          '<button onclick="location.reload()" style="margin-top:12px;width:100%;padding:10px;border:none;border-radius:10px;background:#f97316;color:#fff;font-weight:800;font-size:14px;cursor:pointer;">RECHARGER LE JEU</button>' +
+          '</div>';
+      }
+      window.__showBootError = showBootError;
+      window.onerror = function (msg, src, line, col, err) {
+        var detail = (err && err.stack) ? err.stack : (msg + ' (' + src + ':' + line + ':' + col + ')');
+        showBootError('Erreur de chargement', detail);
+        return false;
+      };
+      window.addEventListener('unhandledrejection', function (e) {
+        var reason = e && e.reason ? (e.reason.stack || e.reason.message || String(e.reason)) : 'Promesse rejetée';
+        showBootError('Erreur asynchrone', reason);
+      });
+    })();
+  </script>
+
   <!-- Crisp Industrial / Arcade Fonts with solid system fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
